@@ -1,0 +1,10 @@
+export type TermCount = {term:string;count:number};
+export type Keyword = {term:string;score:number};
+export type PsychologyRecord = {record_id:string;idade_faixa:string|null;contexto:string;texto:string;tema_principal:string;tema_secundario:string|null;data_sintetica:string|null;tema_previsto?:string};
+export type PsychologyStats = {records:number;themes:number;clusters:number;model:string;f1_macro:number;theme_distribution:Record<string,number>;context_distribution:Record<string,number>;cluster_distribution:Record<string,number>;average_text_length:number;notice:string};
+export type PsychologyModel = {version:string;algorithm:string;date:string;dataset:string;records:number;seed:number;train_records:number;test_records:number;input:string[];target:string;metrics:Record<string,number>;labels:string[];confusion_matrix:number[][];cluster_count:number;cluster_algorithm:string;similarity_algorithm:string;features:number;cluster_sizes:Record<string,number>;status:string;evaluation_note:string};
+export type PsychologyTerms = {total_records:number;words:TermCount[];bigrams:TermCount[];by_theme:Record<string,TermCount[]>};
+export type PsychologyCluster = {cluster_id:number;label:string;quantidade:number;top_terms:string[];sample_records:string[]};
+export type PsychologyAnalysis = {original_text:string;keywords:Keyword[];classification:{prediction:string;probabilities:Record<string,number>;top_themes:{theme:string;probability:number}[]};similar:{record_id:string;similarity:number;theme:string;text:string}[];cluster:{cluster_id:number;label:string};processing:{original:string;normalized:string;tokens:string[];stopwords_removed:string[];terms_kept:string[];feature_count:number};tfidf:Keyword[];notice:string};
+export type PsychologyDetail = PsychologyRecord & {analysis:PsychologyAnalysis;correct:boolean};
+export type PsychologyPreview = {token:string;record_count:number;column_count:number;missing_total:number;duplicates:number;importable:number;columns:string[];detected_types:Record<string,string>;missing_values:Record<string,number>;average_text_length:number;themes:string[];preview:Record<string,unknown>[]};

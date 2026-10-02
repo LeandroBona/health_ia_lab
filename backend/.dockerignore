@@ -1,0 +1,9 @@
+.venv
+venv
+__pycache__
+*.pyc
+health_ai_lab.db
+.env*
+models
+tests
+.pytest_cache

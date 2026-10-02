@@ -1,0 +1,1 @@
+"""Educational Pharmacy models."""

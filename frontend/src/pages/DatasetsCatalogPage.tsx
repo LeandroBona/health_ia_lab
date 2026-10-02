@@ -1,0 +1,5 @@
+import { useEffect, useState } from "react";
+import { DatasetCard, EmptyState, ErrorAlert, LoadingState, PageHeader } from "../components/platform/Shared";
+import { platformApi } from "../services/api";
+import type { CatalogDataset } from "../types/platform";
+export function DatasetsCatalogPage(){const [items,setItems]=useState<CatalogDataset[]|null>(null),[error,setError]=useState("");useEffect(()=>{platformApi.datasets().then(result=>setItems(result.items)).catch(cause=>setError(cause instanceof Error?cause.message:"Falha ao carregar datasets."))},[]);return <div className="space-y-6"><PageHeader title="Datasets sintéticos" subtitle="Inventário comum dos conjuntos de dados. Explore, importe ou baixe os arquivos padrão pelos fluxos já existentes."/>{error&&<ErrorAlert message={error}/>} {!items&&!error?<LoadingState/>:items?.length?<div className="grid gap-4 lg:grid-cols-2 xl:grid-cols-3">{items.map(item=><DatasetCard dataset={item} key={item.id}/>)}</div>:<EmptyState message="Nenhum dataset disponível no momento."/>}</div>}

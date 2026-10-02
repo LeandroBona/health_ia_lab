@@ -1,0 +1,43 @@
+services:
+  backend:
+    build:
+      context: ./backend
+    env_file:
+      - .env.production
+    environment:
+      DATABASE_URL: sqlite:////data/health_ai_lab.db
+      DATASETS_DIR: /data/datasets
+      MODELS_DIR: /data/models
+    volumes:
+      - health_ai_data:/data
+    expose:
+      - "8000"
+    networks:
+      - health_ai_internal
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/api/health', timeout=5)"]
+      interval: 15s
+      timeout: 7s
+      start_period: 5m
+      retries: 4
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: ./frontend
+      args:
+        VITE_API_URL: ${VITE_API_URL:-/api}
+    ports:
+      - "127.0.0.1:8080:80"
+    depends_on:
+      backend:
+        condition: service_healthy
+    networks:
+      - health_ai_internal
+    restart: unless-stopped
+
+networks:
+  health_ai_internal:
+
+volumes:
+  health_ai_data:

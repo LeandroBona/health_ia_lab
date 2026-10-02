@@ -1,0 +1,32 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+
+# Backend runtime
+backend/health_ai_lab.db
+backend/health_ai_lab.db-*
+backend/models/
+datasets/fisioterapia/*.csv
+datasets/fisioterapia/*.xlsx
+datasets/enfermagem/*.csv
+datasets/enfermagem/*.xlsx
+datasets/farmacia/*.csv
+datasets/farmacia/*.xlsx
+
+# Frontend
+frontend/node_modules/
+frontend/dist/
+frontend/.env
+*.tsbuildinfo
+
+# Environment and editor files
+.env
+.env.production
+.env.production.*.local
+.DS_Store
+.idea/
+.vscode/
+.sites-runtime/

@@ -1,0 +1,5 @@
+import { useEffect, useState } from "react";
+import { EmptyState, ErrorAlert, LoadingState, ModelCard, PageHeader } from "../components/platform/Shared";
+import { platformApi } from "../services/api";
+import type { CatalogModel } from "../types/platform";
+export function ModelsCatalogPage(){const [items,setItems]=useState<CatalogModel[]|null>(null),[error,setError]=useState("");useEffect(()=>{platformApi.models().then(result=>setItems(result.items)).catch(cause=>setError(cause instanceof Error?cause.message:"Falha ao carregar modelos."))},[]);return <div className="space-y-6"><PageHeader title="Modelos de IA" subtitle="Metadados dos modelos especializados, da visão local e da camada de explicação. Esta página não executa treinamento."/>{error&&<ErrorAlert message={error}/>} {!items&&!error?<LoadingState/>:items?.length?<div className="grid gap-4 lg:grid-cols-2 xl:grid-cols-3">{items.map(item=><ModelCard model={item} key={item.id}/>)}</div>:<EmptyState message="Nenhum modelo cadastrado no momento."/>}</div>}
